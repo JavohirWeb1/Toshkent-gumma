@@ -13,8 +13,25 @@ const userStates = {}; // Foydalanuvchilar holatini saqlash
 // Start komanda
 bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
-  userStates[chatId] = { step: null };
+  const user = {
+    id: msg.from.id,
+    first_name: msg.from.first_name || '',
+    username: msg.from.username || '',
+  };
 
+  // Foydalanuvchini fayldan tekshirish
+  let users = [];
+  if (fs.existsSync('users.json')) {
+    users = JSON.parse(fs.readFileSync('users.json'));
+  }
+
+  // ID mavjud bo‘lmasa — qo‘shamiz
+  const alreadyExists = users.find(u => u.id === user.id);
+  if (!alreadyExists) {
+    users.push(user);
+    fs.writeFileSync('users.json', JSON.stringify(users, null, 2));
+    console.log(`🆕 Yangi foydalanuvchi saqlandi: ${user.first_name}`);
+  }
   const options = {
     reply_markup: {
       keyboard: [['📦 Buyurtma berish']],
