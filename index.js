@@ -12,33 +12,17 @@ const userStates = {}; // Foydalanuvchilar holatini saqlash
 
 bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
-  const user = {
-    id: msg.from.id,
-    first_name: msg.from.first_name || '',
-    username: msg.from.username || '',
-  };
+  userStates[chatId] = { step: null };
 
-  // Foydalanuvchini fayldan tekshirish
-  let users = [];
-  if (fs.existsSync('users.json')) {
-    users = JSON.parse(fs.readFileSync('users.json'));
-  }
-
-  // ID mavjud bo‘lmasa — qo‘shamiz
-  const alreadyExists = users.find(u => u.id === user.id);
-  if (!alreadyExists) {
-    users.push(user);
-    fs.writeFileSync('users.json', JSON.stringify(users, null, 2));
-    console.log(`🆕 Yangi foydalanuvchi saqlandi: ${user.first_name}`);
-  }
-
-  bot.sendMessage(chatId, "Xush kelibsiz! Buyurtma berish uchun tugmadan foydalaning.", {
+  const options = {
     reply_markup: {
       keyboard: [['📦 Buyurtma berish']],
       resize_keyboard: true,
       one_time_keyboard: true
     }
-  });
+  };
+
+  bot.sendMessage(chatId, "Xush kelibsiz! Quyidagi tugma orqali buyurtma bering:", options);
 });
 
 // Buyurtma berish tugmasi
@@ -52,7 +36,11 @@ bot.on('message', (msg) => {
 
   if (text === '📦 Buyurtma berish') {
     state.step = 'product';
-    bot.sendMessage(chatId, "Nima buyurtma qilmoqchisiz? Perashki,   Gumma,   Shashlik perashki", {
+    bot.sendMessage(chatId, "Nima buyurtma qilmoqchisiz?\n\n" +
+  "✅ Kartoshkali perashki\n" +
+  "✅ Sosiskali perashki\n" +
+  "✅ Shashlikli perashki\n" +
+  "✅ Gumma", {
                     reply_markup: {
                       keyboard: [['🔙 Bekor qilish']],
                       resize_keyboard: true,
