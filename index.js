@@ -1,15 +1,3 @@
-require('dotenv').config();
-const mongoose = require('mongoose');
-const User = require('./userModel'); // modelni chaqirish
-
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-}).then(() => {
-  console.log('✅ MongoDB ulandi');
-}).catch(err => {
-  console.error('❌ MongoDB xatolik:', err);
-});
 
 
 const TelegramBot = require('node-telegram-bot-api');
@@ -24,35 +12,19 @@ const bot = new TelegramBot(token, { polling: true });
 
 const userStates = {}; // Foydalanuvchilar holatini saqlash
 
-bot.onText(/\/start/, async (msg) => {
+bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
-  const from = msg.from;
+  userStates[chatId] = { step: null };
 
-  try {
-    const existingUser = await User.findOne({ id: from.id });
-    if (!existingUser) {
-      await User.create({
-        id: from.id,
-        first_name: from.first_name || '',
-        username: from.username || '',
-        is_bot: from.is_bot,
-        language_code: from.language_code || ''
-      });
-      console.log(`🆕 Yangi foydalanuvchi saqlandi: ${from.first_name}`);
-    } else {
-      console.log(`ℹ️ Foydalanuvchi mavjud: ${from.first_name}`);
-    }
-  } catch (err) {
-    console.error("❌ Mongo saqlashda xatolik:", err);
-  }
-
-  bot.sendMessage(chatId, "Xush kelibsiz! Buyurtma berish uchun tugmadan foydalaning.", {
+  const options = {
     reply_markup: {
       keyboard: [['📦 Buyurtma berish']],
       resize_keyboard: true,
       one_time_keyboard: true
     }
-  });
+  };
+
+  bot.sendMessage(chatId, "Xush kelibsiz! Quyidagi tugma orqali buyurtma bering:", options);
 });
 // Buyurtma berish tugmasi
 bot.on('message', (msg) => {
