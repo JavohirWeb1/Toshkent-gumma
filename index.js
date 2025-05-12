@@ -10,7 +10,6 @@ const bot = new TelegramBot(token, { polling: true });
 
 const userStates = {}; // Foydalanuvchilar holatini saqlash
 
-// Start komanda
 bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
   const user = {
@@ -32,15 +31,14 @@ bot.onText(/\/start/, (msg) => {
     fs.writeFileSync('users.json', JSON.stringify(users, null, 2));
     console.log(`🆕 Yangi foydalanuvchi saqlandi: ${user.first_name}`);
   }
-  const options = {
+
+  bot.sendMessage(chatId, "Xush kelibsiz! Buyurtma berish uchun tugmadan foydalaning.", {
     reply_markup: {
       keyboard: [['📦 Buyurtma berish']],
       resize_keyboard: true,
       one_time_keyboard: true
     }
-  };
-
-  bot.sendMessage(chatId, "Xush kelibsiz! Quyidagi tugma orqali buyurtma bering:", options);
+  });
 });
 
 // Buyurtma berish tugmasi
