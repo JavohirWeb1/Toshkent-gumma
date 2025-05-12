@@ -100,6 +100,7 @@ bot.on('message', (msg) => {
       break;
     case 'phone':
       state.phone = text;
+    
 
       // Buyurtmani to‘liq yuboramiz
       const order = `🆕 Yangi buyurtma:\n` +
@@ -111,11 +112,11 @@ bot.on('message', (msg) => {
 
       bot.sendMessage(adminChatId, order);
       bot.sendMessage(groupChatId, order);
-      bot.sendMessage(chatId, "✅ Buyurtmangiz qabul qilindi! Tez orada bog‘lanamiz.");
+      bot.sendMessage(chatId, "✅ Buyurtmangiz qabul qilindi! Tez orada bog‘lanamiz. ");
 
       // Reset and return to order button
       userStates[chatId] = { step: null };
-      bot.sendMessage(chatId, "Yana buyurtma berish uchun pastdagi tugmani bosing:", {
+      bot.sendMessage(chatId, "Yana buyurtma berish uchun pastdagi tugmani bosing👇:", {
         reply_markup: {
           keyboard: [['📦 Buyurtma berish']],
           resize_keyboard: true,
