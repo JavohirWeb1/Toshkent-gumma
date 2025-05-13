@@ -90,6 +90,8 @@ if (text === '📦 Buyurtma berish') {
       state.step = 'quantity';
       bot.sendMessage(chatId, "Miqdori?", {
                     reply_markup: {
+                       force_reply: true,
+                       input_field_placeholder: "Masalan: 10"
                       keyboard: [['🔙 Bekor qilish']],
                       resize_keyboard: true,
                       one_time_keyboard: true
