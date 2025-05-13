@@ -82,11 +82,14 @@ bot.on('message', (msg) => {
       summary += `🍴 ${item.product} — ${item.quantity} dona\n`;
     });
 
-    bot.sendMessage(chatId, summary + "\n📍 Endi manzilingizni yozing:", {
-    reply_markup: {
-      remove_keyboard: true
-    }
-  });
+    bot.sendMessage(chatId, "📍 Manzilingizni yozing:", {
+  reply_markup: {
+    keyboard: [['🔙 Bekor qilish']],
+    resize_keyboard: true,
+    one_time_keyboard: true,
+    input_field_placeholder: "Mashal yoniga"
+  }
+});
   return;
   }
 
@@ -126,9 +129,12 @@ bot.on('message', (msg) => {
     state.address = text;
     state.step = 'phone';
     // bot.sendMessage(chatId, "Telefon raqamingiz?");
-bot.sendMessage(chatId, "📞 Telefon raqamingiz?", {
+bot.sendMessage(chatId, "📞 Telefon raqamingizni yozing:", {
   reply_markup: {
-    remove_keyboard: true
+    keyboard: [['🔙 Bekor qilish']],
+    resize_keyboard: true,
+    one_time_keyboard: true,
+    input_field_placeholder: "955529708"
   }
 });
     return;
