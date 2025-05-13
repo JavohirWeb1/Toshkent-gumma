@@ -35,21 +35,41 @@ bot.on('message', (msg) => {
 
   const state = userStates[chatId];
 
-  if (text === '📦 Buyurtma berish') {
-    state.step = 'product';
-    bot.sendMessage(chatId, "Nima buyurtma qilmoqchisiz?\n\n" +
-  "✅ Kartoshkali perashki\n" +
-  "✅ Sosiskali perashki\n" +
-  "✅ Shashlikli perashki\n" +
-  "✅ Gumma", {
-                    reply_markup: {
-                      keyboard: [['🔙 Bekor qilish']],
-                      resize_keyboard: true,
-                      one_time_keyboard: true
-                    }
-                  });
-    return;
-  }
+  // if (text === '📦 Buyurtma berish') {
+  //   state.step = 'product';
+  //   bot.sendMessage(chatId, "Nima buyurtma qilmoqchisiz?\n\n" +
+  // "✅ Kartoshkali Gumma  -  3500\n" +
+  // "✅ Go`shtli Gumma  -  3500\n" +
+  // "✅ Sosiskali perashki  -  4000\n" +
+  // "✅ Shashlikli perashki  -  5000\n" +
+  // "✅ Kartoshkali Perashki  -  3000", {
+  //                   reply_markup: {
+  //                     keyboard: [['🔙 Bekor qilish']],
+  //                     resize_keyboard: true,
+  //                     one_time_keyboard: true
+  //                   }
+  //                 });
+  //   return;
+  // }
+if (text === '📦 Buyurtma berish') {
+  state.step = 'product';
+  bot.sendMessage(chatId, "Nima buyurtma qilmoqchisiz?", {
+    reply_markup: {
+      keyboard: [
+        ['Kartoshkali Gumma  -  3500'],
+        ['Go`shtli Gumma  -  3500'],
+        ['Sosiskali perashki  -  4000'],
+        ['Shashlikli perashki  -  5000'],
+        ['Kartoshkali Perashki  -  3000'],
+        ['🔙 Bekor qilish']
+      ],
+      resize_keyboard: true,
+      one_time_keyboard: true
+    }
+  });
+  return;
+}
+
   if (text === '🔙 Bekor qilish') {
                     userStates[chatId] = { step: null };
                   
