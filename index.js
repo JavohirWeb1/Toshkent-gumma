@@ -82,8 +82,12 @@ bot.on('message', (msg) => {
       summary += `🍴 ${item.product} — ${item.quantity} dona\n`;
     });
 
-    bot.sendMessage(chatId, summary + "\n📍 Endi manzilingizni yozing:");
-    return;
+    bot.sendMessage(chatId, summary + "\n📍 Endi manzilingizni yozing:", {
+    reply_markup: {
+      remove_keyboard: true
+    }
+  });
+  return;
   }
 
   // Mahsulot tanlang
@@ -121,7 +125,12 @@ bot.on('message', (msg) => {
   if (state.step === 'address') {
     state.address = text;
     state.step = 'phone';
-    bot.sendMessage(chatId, "Telefon raqamingiz?");
+    // bot.sendMessage(chatId, "Telefon raqamingiz?");
+bot.sendMessage(chatId, "📞 Telefon raqamingiz?", {
+  reply_markup: {
+    remove_keyboard: true
+  }
+});
     return;
   }
 
