@@ -3,6 +3,8 @@ const TelegramBot = require('node-telegram-bot-api');
 const token = '7470866098:AAGwiOK90YvgSKej8RFhzdowtwozZ7Y-WJA'; // Bot tokeni
 const adminChatId = 805693777; // Admin Telegram ID
 const groupChatId = -1002618646109
+const INFOgroupChatId = -1002592152871
+
 ; // Guruh chat ID (minus bilan boshlanadi)
 // const adminChatId = -4685247186; // Admin Telegram ID
 
@@ -20,16 +22,30 @@ bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
   userStates[chatId] = { step: null };
 
-  const options = {
+  const from = msg.from;
+  const now = new Date().toLocaleString('uz-UZ', {
+    timeZone: 'Asia/Tashkent'
+  });
+
+  const profileMessage = `👤 *Yangi foydalanuvchi start bosdi!*\n\n` +
+    `📛 Ismi: ${from.first_name || '—'}\n` +
+    `🆔 ID: \`${from.id}\`\n` +
+    `🏷 Username: ${from.username ? '@' + from.username : '—'}\n` +
+    `🕒 Vaqti: ${now}`;
+
+  // Guruhga yuborish (maxsus groupChatId bo‘lishi kerak)
+  bot.sendMessage(INFOgroupChatId, profileMessage, { parse_mode: 'Markdown' });
+
+  // Mijozga xabar
+  bot.sendMessage(chatId, "Xush kelibsiz! Quyidagi tugma orqali buyurtma bering 👇:", {
     reply_markup: {
       keyboard: [['📦 Buyurtma berish']],
       resize_keyboard: true,
       one_time_keyboard: true
     }
-  };
-
-  bot.sendMessage(chatId, "Xush kelibsiz! Quyidagi tugma orqali buyurtma bering:", options);
+  });
 });
+
 
 
 const productMenu = [
