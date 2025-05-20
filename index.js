@@ -46,6 +46,27 @@ bot.onText(/\/start/, (msg) => {
   });
 });
 
+bot.onText(/\/location/, (msg) => {
+  const chatId = msg.chat.id;
+
+  const infoMessage = `📍 *Bizning manzilimiz:*\n` +
+    `https://yandex.uz/maps/-/CHv2bO9C\n\n` +
+`https://maps.app.goo.gl/4UZXRyR46KTzawtt6\n\n` +
+    `📞 Aloqa uchun: +998 95 552 97 08\n` +
+    `📬 Telegram: @zomingummabot\n\n` +
+    `🕒 Ish vaqti: 06:00 — 21:00 (Har kuni)\n\n` +
+    `Marhamat, buyurtma berish uchun pastdagi tugmadan foydalaning!`;
+
+  bot.sendMessage(chatId, infoMessage, {
+    parse_mode: 'Markdown',
+    reply_markup: {
+      keyboard: [['📦 Buyurtma berish']],
+      resize_keyboard: true
+    }
+  });
+});
+
+
 
 
 const productMenu = [
